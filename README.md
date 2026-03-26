@@ -1,35 +1,52 @@
-# 📚 Documentação de Workflows N8N
+# 📚 Documentação de Workflows n8n com Agentes de IA
 
-## 🎯 Estrutura dos Workflows  
-Este repositório contém diversos workflows para [n8n](https://n8n.io), uma poderosa ferramenta de automação de processos extensível.
+## 🎯 Sobre o Projeto
+Este repositório contém automações avançadas desenvolvidas no [n8n](https://n8n.io), focadas na criação de **Agentes de Inteligência Artificial** autônomos com memória de contexto e capacidade de uso de ferramentas externas (Tool Calling).
 
-Cada workflow é estruturado com os seguintes componentes:
+Cada workflow é estruturado com os seguintes componentes principais:
 
 | Componente | Descrição |
 |-----------|-----------|
-| **⚡ Trigger** | Define o evento que inicia o workflow |
-| **🔧 Actions** | Tarefas executadas em resposta ao trigger (chamadas API, operações em banco de dados, etc.) |
+| **⚡ Trigger** | Eventos que iniciam o fluxo (Webhooks ou Chat Web nativo) |
+| **🧠 Agente IA** | Modelos LLM de alta performance tomando decisões e formatando respostas |
+| **🔧 Actions** | Tarefas executadas em resposta (operações em planilhas, consultas na web, requisições HTTP) |
+
+---
+
+## 🤖 Os Agentes Desenvolvidos
+
+### 1️⃣ Agente Web (Suporte e Registro de Interações)
+Um agente de IA focado em atendimento direto, acessível via link web público.
+* **Como funciona:** O usuário envia uma dúvida ➡️ O fluxo salva a pergunta no Google Sheets (para auditoria) ➡️ O Agente processa a resposta usando memória e ferramentas (Wikipedia/Calculadora) ➡️ Responde na interface de chat.
+
+### 2️⃣ Agente WhatsApp (Captação de Leads Inteligente)
+Um agente integrado ao WhatsApp (via Z-API), projetado para qualificação de contatos 1 a 1.
+* **Como funciona:** Recebe a mensagem via Webhook ➡️ Passa por um **filtro lógico (Node IF)** que ignora grupos e listas de transmissão ➡️ Extrai o Nome e Telefone do usuário ➡️ Atualiza a planilha de Leads no Google Sheets (evitando contatos duplicados) ➡️ O Agente gera a resposta ➡️ O fluxo faz um `POST` devolvendo a mensagem para o WhatsApp do cliente.
 
 ---
 
 ## 🚀 Como Usar os Workflows
 
-Siga estes passos para usar os workflows:
+Siga estes passos para testar os fluxos no seu próprio ambiente:
 
-1. 📦 Clone o repositório
-2. 📥 Importe o workflow desejado em sua instância n8n
-3. ⚙️ Ajuste as configurações conforme necessário
-4. ▶️ Dispare o workflow manualmente ou de forma automática
+1. 📦 Clone este repositório ou faça o download dos arquivos `.json`.
+2. 📥 Importe o workflow desejado na sua instância do n8n (`Workflows > Import from File`).
+3. ⚙️ Ajuste as credenciais de segurança:
+   * **Groq API:** Insira sua chave para habilitar o modelo LLM.
+   * **Google Sheets:** Autentique sua conta e mapeie o ID da sua planilha.
+   * **Z-API:** (Apenas Workflow 2) Insira seu Token e URL da instância no nó de HTTP Request.
+4. ▶️ Dispare o workflow manualmente para testar ou ative-o (Active) para rodar em background.
 
 ---
 
-## 🔌 Integrações Disponíveis
+## 🔌 Integrações Utilizadas
 
-Estes workflows utilizam diversas integrações, incluindo:
+Estes workflows demonstram a integração fluida entre as seguintes tecnologias:
 
-- **🌐 APIs**: Conecte com serviços de terceiros
-- **🗄️ Bancos de Dados**: Interaja com bancos SQL e NoSQL
-- **🔔 Webhooks**: Receba eventos de serviços externos
+- **🌐 Groq API**: Processamento de IA em tempo real usando o modelo `llama-3.3-70b-versatile`.
+- **🗄️ Google Sheets**: Atuando como banco de dados leve para registro de logs e CRM de leads.
+- **📱 Z-API**: Comunicação bidirecional com o WhatsApp.
+- **🛠️ LangChain Tools**: Ferramentas nativas de IA do n8n para buscar dados precisos fora do modelo.
 
 ---
 
